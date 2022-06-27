@@ -27,7 +27,40 @@
                                             <td colspan="2">&nbsp;</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><h4>Database setup</h4></td>
+                                            <td colspan="2"><h4>Database Setup</h4></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">MySql Server Name:</td>
+                                            <td align="left"><input type="text" id="db_server" name="db_server"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td align="left" style="font-size:12px">Enter the name of your MySql Server <br />[may be localhost]</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">MySql Server User Name:</td>
+                                            <td align="left"><input type="text" id="db_user" name="db_user"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td align="left" style="font-size:12px">Enter the name of your MySql server user&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">MySql Server User Password:</td>
+                                            <td align="left"><input type="text" id="db_pass" name="db_pass"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td align="left" style="font-size:12px">Enter the password for your MySql server user&nbsp;</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">&nbsp;</td>
@@ -43,28 +76,6 @@
                                         <tr>
                                             <td colspan="2">&nbsp;</td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="2">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="right">Database User Name:</td>
-                                            <td align="left"><input type="text" id="db_user" name="db_user"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                            <td align="left" style="font-size:12px">Enter the name of your database user&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="right">Database User Password:</td>
-                                            <td align="left"><input type="text" id="db_pass" name="db_pass"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                            <td align="left" style="font-size:12px">Enter the password for your database user&nbsp;</td>
-                                        </tr>
                                     </table>
                                 </td>
                                 <td>
@@ -79,12 +90,23 @@
                                             <td colspan="2">&nbsp;</td>
                                         </tr>
                                         <tr>
-                                            <td align="right">Email:</td>
-                                            <td align="left"><input type="text" id="adm_email" name="adm_email"></td>
+                                            <td align="right">First Name:</td>
+                                            <td align="left"><input type="text" id="adm_fname" name="adm_fname"></td>
                                         </tr>
                                         <tr>
                                             <td>&nbsp;</td>
-                                            <td align="left" style="font-size:12px">Enter the system administrators email address.<br />  This will be the Super User of the site</td>
+                                            <td align="left" style="font-size:12px">Enter your first name.</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">Last Name:</td>
+                                            <td align="left"><input type="text" id="adm_lname" name="adm_lname"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td align="left" style="font-size:12px">Enter your last name.</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">&nbsp;</td>
@@ -95,7 +117,7 @@
                                         </tr>
                                         <tr>
                                             <td>&nbsp;</td>
-                                            <td align="left" style="font-size:12px">Set the username for the system administrator.</td>
+                                            <td align="left" style="font-size:12px">Set the username for the system administrator.<br />  This will be the Super User of the site</td>
                                         </tr>
                                         <tr>
                                             <td>&nbsp;</td>
@@ -137,28 +159,24 @@
         <?php
         require 'scripts/installer.php';
         if ($_SERVER["REQUEST_METHOD"] == "POST"){
-            $username = $_POST['UserName'];
-            $password = $_POST['Password'];
+            $dbserv = $_POST['db_server'];
+            $dbuser = $_POST['db_user'];
+            $dbpass = $_POST['db_pass'];
+            $dbname = $_POST['db_name'];
             //echo "Inside the processing loop on inital start <br />";
-            if (empty($username)){
-                echo '<span style="color:red">Username cannot be blank</span>';
-            }elseif (empty($password)){
-                echo '<span style="color:red">Password cannot be blank</span>';
+            if (empty($dbserv)){
+                echo '<span style="color:red">MySql Server Name cannot be blank</span>';
+            }elseif (empty($dbuser)){
+                echo '<span style="color:red">Mysql Server User Name cannot be blank</span>';
+            }elseif (empty($dbpass)){
+                echo '<span style="color:red">Mysql Server User Password cannot be blank</span>';
+            }elseif (empty($dbname)){
+                echo '<span style="color:red">Database Name cannot be blank</span>';
             }else{
-                $isValid = validate_login($username,$password);
-                //echo "Valid user count is " . $isValid;
-                if ($isValid == 1){
-                    //$userinfo = get_userinfo($username);
-                    //$_SESSION['userId'] = $userinfo[0][emp_id];
-                    //$_SESSION['firstname'] = $userinfo[0][fname];
-                    //$_SESSION['lastname'] = $userinfo[0][lname];
-                    $_SESSION['loggedin'] = 1;
-                    header("Location:home.php?q=0");
+                $isDbInit = dbsetup($dbserv,$dbuser,$dbpass,$dbname);
+                echo "Database init return is " . $isDbInit . "<br />";
+                if ($isDbInit == 1){
                     //echo 'It worked';
-                }elseif ($isValid == -1) {
-                    echo '<span style="color:red">Invalid username<br />Please re-enter</span>';
-                }elseif ($isValid == -2) {
-                    echo '<span style="color:red">Invalid password<br />Please re-enter</span>';
                 }
             }
         }

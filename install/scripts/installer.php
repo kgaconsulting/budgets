@@ -3,34 +3,37 @@
     copyright KGA Consulting Service 2021
 */
 
-    function dbconnect($Server,$User,$Pass){
-        static $conn;
-        if (!$conn) {
-            $conn = new mysqli ($Server, $User, $Pass);
-            if ($conn->connection_error){
-                //trigger_error('Could not connect to MYSql.');
-                 die("Connection failed: " . $conn->connect_error) . "<p />\n";
-            }
-        }    
-       return $conn;
+    function dbconnect($Server,$User,$Pass,$dname){
+        $conn = new mysqli ($Server, $User, $Pass);
+    return $conn;
     }
 
-    function dbsetup($Server, $User, $Pass, $Dbase){
-        $conn = dbconnect($Server,$User,$Pass);
-        $sql = "select count(*) as valid1 from information_schema.schemata where schema_name = '".$Dbase."'";
-        $result1 = $conn->query($sql);
-        if ($result1->num_rows > 0) {
-                while($row = $result1->fetch_assoc()) {
-                $b = $row[valid1];
+    function dbsetup($dbserver, $dbuser, $dbpass,$dbname){
+        $conn = dbconnect($dbserver,$dbuser,$dbpass,$dbname);
+/*        if($conn){
+            echo "We have lift-off<br />";
+        }else{
+            echo "Huston, we have a problem. . . ";
+        } */
+        $sql = "select count(*) as valid1 from information_schema.schemata where schema_name = '" . $dbname . "'";
+        $result = $conn->query($sql); 
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $b = $row['valid1'];
                 if ($b==0){
-                    $sql = "create database ".$Dbase;
-                    $result = $conn->query($sql);
+                    $sql = "create database ".$dbname;
+                    //$result = $conn->query($sql);
+                    $result = 1;
                 }elseif ($b == 1){
                     $result = 2;
+                }else{
+                    $result =7;
                 }
             }
+        }else{
+            $result = -8;
         }
-        return $result;
+        return $result; 
     }
 
     function dbbuild($mysqlHost, $mysqlUser, $mysqlPassword, $mysqlDatabase){
