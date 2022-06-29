@@ -3,35 +3,31 @@
     copyright KGA Consulting Service 2021
 */
 
-    function dbconnect($Server,$User,$Pass,$dname){
-        $conn = new mysqli ($Server, $User, $Pass);
+    function dbconnect($Server,$User,$Pass){
+        //$conn = new mysqli ($Server, $User, $Pass);
+        $conn = @mysqli_connect($Server, $User, $Pass);
+        if ($conn->connect_error) {
+            echo "Unable to connect to DB: " . $conn->connect_error;
+            exit;
+        }
     return $conn;
     }
 
     function dbsetup($dbserver, $dbuser, $dbpass,$dbname){
         $conn = dbconnect($dbserver,$dbuser,$dbpass,$dbname);
-/*        if($conn){
-            echo "We have lift-off<br />";
-        }else{
-            echo "Huston, we have a problem. . . ";
-        } */
-        $sql = "select count(*) as valid1 from information_schema.schemata where schema_name = '" . $dbname . "'";
-        $result = $conn->query($sql); 
+        $sql = "select * from information_schema.schemata where schema_name = '" . $dbname . "'";
+        $result = $conn->query($sql);
         if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $b = $row['valid1'];
-                if ($b==0){
-                    $sql = "create database ".$dbname;
-                    //$result = $conn->query($sql);
-                    $result = 1;
-                }elseif ($b == 1){
-                    $result = 2;
-                }else{
-                    $result =7;
-                }
-            }
+            $result = 2;
         }else{
-            $result = -8;
+            $sql = 'CREATE DATABASE ' . $dbname;
+            if($conn->query($sql) == TRUE){
+                echo "Database created <br />";
+                $result = 1;
+            }else{
+                echo "Database failed to initialize<br />";
+                $result = -1;
+            }
         }
         return $result; 
     }

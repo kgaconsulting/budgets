@@ -5,4 +5,5 @@
 <file name="install.css" server="192.168.1.11//srv/www/dev/" local="132916983230078690" remote="132986132140000000" Dst="2" />
 <file name="install.css" server="keratel.ca//var/www/budgets/" local="132916983230078690" remote="133006802400000000" Dst="2" />
 <file name="install.css" server="192.168.1.11//srv/www/budgets/" local="132916983230078690" remote="133006586650000000" Dst="2" />
+<file name="install.css" server="C:/Apache24/htdocs/" local="132916983230078690" remote="132916983230000000" Dst="2" />
 </dwsync>
