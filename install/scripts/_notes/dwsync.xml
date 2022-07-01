@@ -11,5 +11,6 @@
 <file name="install.js" server="192.168.1.11//srv/www/budgets/" local="132916983230088666" remote="133006586650000000" Dst="2" />
 <file name="installer.php" server="192.168.1.11//srv/www/budgets/" local="133008284377121521" remote="133008556300000000" Dst="2" />
 <file name="install.js" server="C:/Apache24/htdocs/" local="132916983230088666" remote="132916983230000000" Dst="2" />
-<file name="installer.php" server="C:/Apache24/htdocs/" local="133010037963138105" remote="133010037960000000" Dst="2" />
+<file name="installer.php" server="C:/Apache24/htdocs/" local="133011819721602507" remote="133011819720000000" Dst="2" />
+<file name="budgets.sql" server="C:/Apache24/htdocs/" local="133011777075644918" remote="133011777070000000" Dst="2" />
 </dwsync>

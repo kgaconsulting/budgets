@@ -3,4 +3,5 @@
 <file name="index.php" server="192.168.1.11//srv/www/budgets/" local="133006580696146623" remote="133006580780000000" Dst="2" />
 <file name="index.php" server="keratel.ca//var/www/budgets/" local="133006580696146623" remote="133006797600000000" Dst="2" />
 <file name="index.php" server="C:/Apache24/htdocs/" local="133006580696146623" remote="133006580690000000" Dst="2" />
+<file name="info.php" server="C:/Apache24/htdocs/" local="133008594790000000" remote="133008594790000000" Dst="2" />
 </dwsync>
